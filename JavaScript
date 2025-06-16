@@ -1,0 +1,4 @@
+https://www.gurukultti.org/admin/notice/javascript.pdf
+
+
+console.log("Hello world!");

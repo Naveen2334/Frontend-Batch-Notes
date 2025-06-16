@@ -2,3 +2,217 @@ https://www.gurukultti.org/admin/notice/javascript.pdf
 
 
 console.log("Hello world!");
+
+In JavaScript, `let`, `var`, and `const` are used to declare variables, but they behave differently in terms of **scope**, **hoisting**, and **mutability**.
+
+---
+
+### 🔹 `var` (Old way - before ES6)
+
+* **Function-scoped** (not block-scoped)
+* Can be **re-declared** and **updated**
+* **Hoisted** to the top of the function (but initialized as `undefined`)
+
+```js
+function example() {
+  console.log(x); // undefined (not error)
+  var x = 10;
+  console.log(x); // 10
+}
+```
+
+---
+
+### 🔹 `let` (ES6+)
+
+* **Block-scoped**
+* Can be **updated** but **not re-declared** in the same scope
+* **Hoisted**, but **not initialized**, so accessing before declaration throws error
+
+```js
+function example() {
+  console.log(x); // ReferenceError
+  let x = 10;
+}
+```
+
+---
+
+### 🔹 `const` (ES6+)
+
+* **Block-scoped**
+* **Cannot be updated or re-declared**
+* Must be **initialized** when declared
+* You **can mutate** objects/arrays declared with `const`
+
+```js
+const x = 10;
+x = 20; // ❌ Error
+
+const arr = [1, 2];
+arr.push(3); // ✅ Allowed (mutating, not re-assigning)
+```
+
+---
+
+### 📊 Summary Table
+
+| Feature                  | `var`             | `let`         | `const`       |
+| ------------------------ | ----------------- | ------------- | ------------- |
+| Scope                    | Function          | Block         | Block         |
+| Re-declaration           | ✅ Yes             | ❌ No          | ❌ No          |
+| Re-assignment            | ✅ Yes             | ✅ Yes         | ❌ No          |
+| Hoisting                 | ✅ Yes (undefined) | ✅ Yes (TDZ\*) | ✅ Yes (TDZ\*) |
+| Temporal Dead Zone (TDZ) | ❌ No              | ✅ Yes         | ✅ Yes         |
+
+> \*TDZ = Cannot access the variable before it's declared.
+
+---
+
+### ✅ When to use what?
+
+* Use `const` **by default**
+* Use `let` if you **need to reassign**
+* Avoid `var` (except in legacy code)
+
+Would you like examples for interview questions or deep memory model explanation as well?
+Great question! In JavaScript, there are **three ways to define strings**:
+
+---
+
+### ✅ 1. **Double Quotes (`"`)**
+
+```js
+let name = "Naveen";
+```
+
+* Standard way to declare strings
+* Useful when your string contains **single quotes**
+
+```js
+let sentence = "It's a beautiful day!";
+```
+
+---
+
+### ✅ 2. **Single Quotes (`'`)**
+
+```js
+let name = 'Naveen';
+```
+
+* Also standard
+* Useful when your string contains **double quotes**
+
+```js
+let sentence = 'He said, "Hello!"';
+```
+
+---
+
+### ✅ 3. **Backticks (`` ` ``) — Template Literals**
+
+```js
+let name = "Naveen";
+let greeting = `Hello, ${name}!`;  // ✅ Variable inside string
+```
+
+* Introduced in ES6
+* Allow **multi-line strings**
+* Support **interpolation** with `${expression}`
+
+```js
+let message = `Hi ${name},
+Welcome to the team!`;
+```
+
+---
+
+### 📊 Summary Table
+
+| Feature                | Double (`"`) | Single (`'`) | Backticks (`` ` ``) |
+| ---------------------- | ------------ | ------------ | ------------------- |
+| Basic string support   | ✅            | ✅            | ✅                   |
+| Can use quotes inside  | ✅ (opposite) | ✅ (opposite) | ✅                   |
+| Multiline string       | ❌ (use `\n`) | ❌ (use `\n`) | ✅                   |
+| Variable interpolation | ❌            | ❌            | ✅                   |
+| Use in HTML/JSON often | ✅            | ✅            | ✅                   |
+
+---
+
+### 🔥 When to Use
+
+* Use **backticks** (`` ` ``) when:
+
+  * You want to **embed variables**
+  * You want to write **multi-line strings**
+
+* Use **single** or **double quotes**:
+
+  * Based on coding style or readability
+  * Keep consistency in your codebase
+
+---
+
+Would you like a real-world example using template literals in a function or HTML DOM use case?
+
+Great question! The `=`, `==`, and `===` operators in JavaScript are **very different** and often cause confusion. Here's a clear breakdown:
+
+---
+
+### ✅ 1. `=` (Assignment Operator)
+
+* **Used to assign a value** to a variable
+
+```js
+let x = 5; // Assigns 5 to x
+```
+
+---
+
+### ✅ 2. `==` (Loose Equality)
+
+* **Compares values** for equality after doing **type coercion**
+* Converts both operands to the same type before comparing
+
+```js
+'5' == 5   // ✅ true (string '5' is converted to number 5)
+null == undefined  // ✅ true
+0 == false // ✅ true
+```
+
+⚠️ **Can lead to unexpected results**, so it's generally discouraged in modern code.
+
+---
+
+### ✅ 3. `===` (Strict Equality)
+
+* **Compares value AND type**
+* No type conversion — if types differ, result is `false`
+
+```js
+'5' === 5   // ❌ false (string !== number)
+5 === 5     // ✅ true
+null === undefined // ❌ false
+0 === false // ❌ false
+```
+
+---
+
+### 📊 Summary Table
+
+| Operator | Name            | Type Coercion | Compares      | Example      | Result  |
+| -------- | --------------- | ------------- | ------------- | ------------ | ------- |
+| `=`      | Assignment      | N/A           | N/A (assigns) | `let x = 10` | x is 10 |
+| `==`     | Loose Equality  | ✅ Yes         | Value only    | `'5' == 5`   | true    |
+| `===`    | Strict Equality | ❌ No          | Value + Type  | `'5' === 5`  | false   |
+
+---
+
+### ✅ Best Practice
+
+> ✅ Always use `===` and `!==` instead of `==` and `!=` to avoid unexpected bugs.
+
+---
+
+Would you like examples of where using `==` can cause real-world bugs?
